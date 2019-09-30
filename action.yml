@@ -1,0 +1,32 @@
+name: 'releases'
+description: 'Create, update and delete releases'
+author: 'Bas Peters'
+inputs:
+  repo_token:
+    description: 'The GITHUB_TOKEN secret'
+    required: true
+  task:
+    description: 'The type of action: create, edit, delete'
+    required: true
+  tag_name:
+    description: 'The name of the tag.'
+    required: true
+  target:
+    description: 'Value that determines where the Git tag is created from'
+    default: 'master'
+    required: false
+  name: 
+    description: 'The name of the release'
+    required: false
+  body:
+    description: 'Text describing the contents of the tag'
+    required: false
+  draft:
+    description: 'True to create a draft release'
+    default: 'false'
+  prerelease:
+    description: 'True to identify the release as a prerelease'
+    default: 'false'
+runs:
+  using: 'node12'
+  main: 'lib/main.js'

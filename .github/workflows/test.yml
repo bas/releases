@@ -1,0 +1,35 @@
+name: "Test typescript-action"
+on:
+  pull_request:
+  push:
+    branches:
+      - 'releases/*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+
+    - run: npm ci
+    - run: npm run build
+    - run: npm test
+    - uses: ./
+      with: 
+        milliseconds: 1000
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        tag_name: 'v1.0'
+        task: 'create'
+    - uses: ./
+      with: 
+        milliseconds: 1000
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        tag_name: 'v1.0'
+        task: 'edit'
+        name: 'Test release'
+    - uses: ./
+      with: 
+        milliseconds: 1000
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        tag_name: 'v1.0'
+        task: 'delete'
