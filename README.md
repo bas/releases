@@ -12,7 +12,7 @@ Action to create, edit or delete [GitHub Releases](https://developer.github.com/
 
 ### `task`
 
-The task to execute: `create`, `edit` or `delete`. Default `create`.
+**Required** The task to execute: `create`, `edit` or `delete`.
 
 ### `tag_name`
 
@@ -44,6 +44,7 @@ Text describing the contents of the tag.
 - uses: bas/releases@v1
     with:
       repo_token: ${{ secrets.GITHUB_TOKEN }}
-      tag_name: ${{ github.ref }}
+      tag_name: 'v1.0'
+      task: 'create'
 ```
 
