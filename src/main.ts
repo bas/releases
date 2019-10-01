@@ -1,12 +1,26 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 
+type ReleaseTask =
+  | "create"
+  | "edit"
+  | "delete";
+
+function asReleaseTask(value: string): ReleaseTask {
+  switch (value) {
+    case "create":
+    case "edit":
+    case "delete":
+      return value;
+  }
+  throw new Error('Unknown release task')
+}
 async function run() {
   try {
 
     const token = core.getInput('repo_token', { required: true });
     const tagName = core.getInput('tag_name', { required: true });
-    const task = core.getInput('task', { required: true });
+    const task: ReleaseTask = asReleaseTask(core.getInput('task', { required: true }));
 
     const target = core.getInput('target');
     const name = core.getInput('name');
