@@ -13,7 +13,7 @@ function asReleaseTask(value: string): ReleaseTask {
     case "delete":
       return value;
   }
-  throw new Error('Unknown deployment status')
+  throw new Error('Unknown release task')
 }
 async function run() {
   try {
