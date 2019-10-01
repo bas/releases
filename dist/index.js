@@ -11076,12 +11076,21 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(__webpack_require__(827));
 const github = __importStar(__webpack_require__(148));
+function asReleaseTask(value) {
+    switch (value) {
+        case "create":
+        case "edit":
+        case "delete":
+            return value;
+    }
+    throw new Error('Unknown release task');
+}
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const token = core.getInput('repo_token', { required: true });
             const tagName = core.getInput('tag_name', { required: true });
-            const task = core.getInput('task', { required: true });
+            const task = asReleaseTask(core.getInput('task', { required: true }));
             const target = core.getInput('target');
             const name = core.getInput('name');
             const body = core.getInput('body');
