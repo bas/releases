@@ -27,6 +27,9 @@ inputs:
   prerelease:
     description: 'True to identify the release as a prerelease'
     default: 'false'
+outputs:
+  upload_url:
+    description: 'The upload_url key returned when creating the release'
 runs:
   using: 'node12'
   main: 'lib/main.js'
