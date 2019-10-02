@@ -31,7 +31,12 @@ async function run() {
     const client = new github.GitHub(token);
 
     if (task == "create") {
-      await createRelease(client, tagName, target, name, body, draft, prerelease);
+      const uploadUrl = await createRelease(client, tagName, target, name, body, draft, prerelease);
+
+      if (uploadUrl) {
+        core.setOutput('upload_url', uploadUrl)
+      }
+
     } else if (task == "edit") {
       const releaseId = await getReleaseId(client, tagName);
       await editRelease(client, releaseId, tagName, target, name, body, draft, prerelease);
@@ -53,8 +58,8 @@ async function createRelease(
   body: string,
   draft: boolean,
   prerelease: boolean
-) {
-  await client.repos.createRelease({
+): Promise<string> {
+  const response = await client.repos.createRelease({
     owner: github.context.repo.owner,
     repo: github.context.repo.repo,
     tag_name: tagName,
@@ -64,6 +69,8 @@ async function createRelease(
     draft: draft,
     prerelease: prerelease
   });
+
+  return response.data.upload_url;
 }
 
 async function editRelease(

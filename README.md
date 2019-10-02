@@ -38,13 +38,23 @@ Text describing the contents of the tag.
 
 `true` to identify the release as a prerelease. `false` to identify the release as a full release. Default: `false`.
 
+## Outputs 
+
+### `upload_url`
+
+The upload_url key returned from creating the release.
+
 ## Example usage
 
 ```yaml
 - uses: bas/releases@v1
+    id: release
     with:
       repo_token: ${{ secrets.GITHUB_TOKEN }}
       tag_name: 'v1.0'
       task: 'create'
+- name: "Check upload URL"
+  run: echo "Release created with ${{ steps.release.outputs.upload_url }}"
+
 ```
 
