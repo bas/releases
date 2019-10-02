@@ -11098,7 +11098,10 @@ function run() {
             const prerelease = (core.getInput('prerelease') == "true");
             const client = new github.GitHub(token);
             if (task == "create") {
-                yield createRelease(client, tagName, target, name, body, draft, prerelease);
+                const uploadUrl = yield createRelease(client, tagName, target, name, body, draft, prerelease);
+                if (uploadUrl) {
+                    core.setOutput('upload_url', uploadUrl);
+                }
             }
             else if (task == "edit") {
                 const releaseId = yield getReleaseId(client, tagName);
@@ -11116,7 +11119,7 @@ function run() {
 }
 function createRelease(client, tagName, target, name, body, draft, prerelease) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield client.repos.createRelease({
+        const response = yield client.repos.createRelease({
             owner: github.context.repo.owner,
             repo: github.context.repo.repo,
             tag_name: tagName,
@@ -11126,6 +11129,7 @@ function createRelease(client, tagName, target, name, body, draft, prerelease) {
             draft: draft,
             prerelease: prerelease
         });
+        return response.data.upload_url;
     });
 }
 function editRelease(client, releaseId, tagName, target, name, body, draft, prerelease) {
