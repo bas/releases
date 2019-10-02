@@ -32,4 +32,4 @@ outputs:
     description: 'The upload_url key returned when creating the release'
 runs:
   using: 'node12'
-  main: 'lib/main.js'
+  main: 'dist/index.js'
