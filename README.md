@@ -42,7 +42,7 @@ Text describing the contents of the tag.
 
 ### `upload_url`
 
-The upload_url key returned from creating the release.
+The `upload_url` key returned from creating the release.
 
 ## Example usage
 
